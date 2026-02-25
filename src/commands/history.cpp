@@ -1,5 +1,5 @@
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file history.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -11,8 +11,8 @@
 #include "../internal.hpp"
 #include <sdk/os/file.h>
 
-// write to history file with int argc, char **argv 
-extern int history_main(int argc, char **argv) { { (void)argc; (void)argv;
+// write to history file with int, char **
+extern int history_main(int, char **) {
     terminal->ClearBuffer();
     char outBuf[BUF_SIZE];
 

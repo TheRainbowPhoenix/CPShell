@@ -57,14 +57,14 @@ uint16_t *load_texture(const char *texturepath) {
 	int fd = File_Open(concatpath, FILE_OPEN_READ);
 	if (fd > -1) {
 		uint16_t info[2];
-		(void)File_Read(fd, info, 4);
+		if (File_Read(fd, info, 4) < 0) {}
 		uint16_t w = info[0];
 		uint16_t h = info[1];
 		uint16_t *result = (uint16_t*)malloc(w*h*2+4);
 		memUsed += (w*h*2)+4;
 		txLoaded += 1;
-		(void)File_Lseek(fd, 0, FILE_SEEK_SET);
-		(void)File_Read(fd, result, w*h*2+4);
+		if (File_Lseek(fd, 0, FILE_SEEK_SET) < 0) {}
+		if (File_Read(fd, result, w*h*2+4) < 0) {}
 		File_Close(fd);
 		return result;
 	}
@@ -94,14 +94,14 @@ uint8_t *load_font(const char *fontpath) {
 	int fd = File_Open(concatpath, FILE_OPEN_READ);
 	if (fd > -1) {
 		uint16_t info[4];
-		(void)File_Read(fd, info, 4);
+		if (File_Read(fd, info, 4) < 0) {}
 		uint16_t w = info[0];
 		uint16_t h = info[1];
 		uint8_t *result = (uint8_t*)malloc(95*w*h/8+5);
 		memUsed += (95*w*h/8)+5;
 		fLoaded += 1;
-		(void)File_Lseek(fd, 0, FILE_SEEK_SET);
-		(void)File_Read(fd, result, (95*w*h/8)+5);
+		if (File_Lseek(fd, 0, FILE_SEEK_SET) < 0) {}
+		if (File_Read(fd, result, (95*w*h/8)+5) < 0) {}
 		File_Close(fd);
 		return result;
 	}
@@ -140,4 +140,3 @@ void draw_font_shader(uint8_t *fontpointer, const char *text, int16_t x, int16_t
 
 	}
 }
-

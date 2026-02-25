@@ -1,5 +1,5 @@
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file rand.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -8,7 +8,7 @@
  * @date 2022-07-02
  */
 
-extern int rand_main(int argc, char **argv) { (void)argc; (void)argv;
+extern int rand_main(int argc, char **argv)
 {
     // check if second argument starts with '-'
     char outBuf[BUF_SIZE];

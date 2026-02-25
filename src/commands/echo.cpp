@@ -1,5 +1,5 @@
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file echo.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -8,7 +8,7 @@
  * @date 2022-06-13
  */
 
-extern int echo_main(int argc, char **argv) { (void)argc; (void)argv;
+extern int echo_main(int argc, char **argv)
 {
     terminal->ClearBuffer();
     // check if there is an argument

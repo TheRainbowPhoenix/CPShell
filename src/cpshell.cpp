@@ -1,6 +1,6 @@
-#include <cstring>
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <string.h>
+#include <stdlib.h>
 #pragma once
 
 #include "../lib/functions/convert.hpp"

@@ -56,7 +56,7 @@ int load_userprofile() {
     }    
 
 	uint8_t* addr;
-	(void)File_GetAddr(fd,0,(const void**)&addr);
+	if (File_GetAddr(fd,0,(const void**)&addr) < 0) {}
 
     ret = File_Close(fd);
     if (ret < 0) {

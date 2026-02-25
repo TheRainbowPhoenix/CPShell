@@ -1,5 +1,5 @@
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file cd.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -11,7 +11,7 @@
 #include "../internal.hpp"
 #include <sdk/os/file.h>
 
-extern int cd_main(int argc, char **argv) { (void)argc; (void)argv;
+extern int cd_main(int argc, char **argv)
 {
     terminal->ClearBuffer();
 

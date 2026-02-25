@@ -1,5 +1,5 @@
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file ls.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -12,7 +12,7 @@
 #include <sdk/os/file.h>
 #include <sdk/os/mem.h>
 
-extern int ls_main(int argc, char **argv) { (void)argc; (void)argv;
+extern int ls_main(int, char **)
 {
     // clear buffer
     terminal->ClearBuffer();

@@ -1,5 +1,5 @@
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file cat.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -11,7 +11,7 @@
 #include "../internal.hpp"
 #include <sdk/os/file.h>
 
-extern int cat_main(int argc, char **argv) { (void)argc; (void)argv;
+extern int cat_main(int argc, char **argv)
 {
     terminal->ClearBuffer();
 
@@ -75,7 +75,7 @@ extern int cat_main(int argc, char **argv) { (void)argc; (void)argv;
 
     // copy memory address
 	uint8_t* addr;
-	(void)File_GetAddr(fd,0,(const void**)&addr);
+	if (File_GetAddr(fd,0,(const void**)&addr) < 0) {}
 
     // close the file
     ret = File_Close(fd);

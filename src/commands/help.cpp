@@ -1,5 +1,5 @@
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file help.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -10,7 +10,7 @@
 
 #include "../internal.hpp"
 
-extern int help_main(int argc, char **argv) { (void)argc; (void)argv;
+extern int help_main(int, char **)
 {
     struct Applet *a = applets;
     terminal->ClearBuffer();
