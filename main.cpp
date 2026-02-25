@@ -223,6 +223,12 @@ void main2() {
 	// load the textures and fonts
 	LOAD_FONT_PTR("7x8", f_7x8);
 	
+	if (!f_7x8) {
+		Debug_Printf(0, 0, false, 0, "Error loading font!");
+		LCD_Refresh();
+		while(1);
+	}
+
 	fillScreen(0); // clear the screen to black (0,0,0)
 
 	RandomGenerator rngp;
