@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file cd.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -9,7 +11,7 @@
 #include "../internal.hpp"
 #include <sdk/os/file.h>
 
-extern int cd_main(int argc, char **argv)
+extern int cd_main(int argc, char **argv) { (void)argc; (void)argv;
 {
     terminal->ClearBuffer();
 
@@ -27,7 +29,7 @@ extern int cd_main(int argc, char **argv)
     int findHandle;
     wchar_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // path does not exist
         strcpy(outBuf, "Path does not exist.\n");
@@ -39,7 +41,7 @@ extern int cd_main(int argc, char **argv)
     }
 
     // path exists, check if it is a directory
-    if (findInfoBuf.type != File_EntryTypeDirectory) {
+    if (findInfoBuf.type != EntryTypeDirectory) {
         // path is not a directory
         strcpy(outBuf, "Path is not a directory.\n");
         terminal->WriteChars(outBuf);

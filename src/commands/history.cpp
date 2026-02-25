@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file history.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -10,7 +12,7 @@
 #include <sdk/os/file.h>
 
 // write to history file with int argc, char **argv 
-extern int history_main(int argc, char **argv) {
+extern int history_main(int argc, char **argv) { { (void)argc; (void)argv;
     terminal->ClearBuffer();
     char outBuf[BUF_SIZE];
 
@@ -18,7 +20,7 @@ extern int history_main(int argc, char **argv) {
     int findHandle;
     wchar_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(g_whistory, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)g_whistory, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // history file does not exist
         // create the file
@@ -38,7 +40,7 @@ extern int history_main(int argc, char **argv) {
         return 0;
 
     // history file exists, check if it is a directory
-    } else if (findInfoBuf.type == File_EntryTypeDirectory) {
+    } else if (findInfoBuf.type == EntryTypeDirectory) {
         // history file is a directory
         strcpy(outBuf, "History file is a directory.\n");
         terminal->WriteChars(outBuf);
@@ -50,7 +52,7 @@ extern int history_main(int argc, char **argv) {
 
     // just cat the file for now
     char *argv2[3];
-    argv2[0] = "cat";
+    argv2[0] = (char*)"cat";
     argv2[1] = g_history;
     argv2[2] = 0;
     cat_main(2, argv2);

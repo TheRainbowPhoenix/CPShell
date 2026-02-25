@@ -30,7 +30,7 @@ int load_userprofile() {
     int findHandle;
     wchar_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(g_wuserprofile, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)g_wuserprofile, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // Does not exist so skip
         strcpy(outBuf, "LOAD: Skipping user profile load.\n");
@@ -38,7 +38,7 @@ int load_userprofile() {
         File_FindClose(findHandle);
         load_settings();
         return 0;
-    } else if (findInfoBuf.type == File_EntryTypeDirectory) {
+    } else if (findInfoBuf.type == EntryTypeDirectory) {
         strcpy(outBuf, "LOAD: User profile is a directory.\n");
         terminal->WriteChars(outBuf);
         File_FindClose(findHandle);
@@ -56,7 +56,7 @@ int load_userprofile() {
     }    
 
 	uint8_t* addr;
-	File_GetAddr(fd,0,(const void**)&addr);
+	(void)File_GetAddr(fd,0,(const void**)&addr);
 
     ret = File_Close(fd);
     if (ret < 0) {

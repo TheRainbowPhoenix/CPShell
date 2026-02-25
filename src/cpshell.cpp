@@ -1,3 +1,6 @@
+#include <cstring>
+#include <cstring>
+#include <cstdlib>
 #pragma once
 
 #include "../lib/functions/convert.hpp"

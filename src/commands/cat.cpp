@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file cat.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -9,7 +11,7 @@
 #include "../internal.hpp"
 #include <sdk/os/file.h>
 
-extern int cat_main(int argc, char **argv)
+extern int cat_main(int argc, char **argv) { (void)argc; (void)argv;
 {
     terminal->ClearBuffer();
 
@@ -37,7 +39,7 @@ extern int cat_main(int argc, char **argv)
     int findHandle;
     wchar_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(wpath, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)wpath, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // path does not exist
         strcpy(outBuf, "Path does not exist.\n");
@@ -49,7 +51,7 @@ extern int cat_main(int argc, char **argv)
     }
 
     // path exists, check if it is a directory
-    if (findInfoBuf.type == File_EntryTypeDirectory) {
+    if (findInfoBuf.type == EntryTypeDirectory) {
         // path is a directory
         strcpy(outBuf, "Path is a directory.\n");
         terminal->WriteChars(outBuf);
@@ -73,7 +75,7 @@ extern int cat_main(int argc, char **argv)
 
     // copy memory address
 	uint8_t* addr;
-	File_GetAddr(fd,0,(const void**)&addr);
+	(void)File_GetAddr(fd,0,(const void**)&addr);
 
     // close the file
     ret = File_Close(fd);

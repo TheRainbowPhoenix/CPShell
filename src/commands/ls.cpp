@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file ls.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -10,7 +12,7 @@
 #include <sdk/os/file.h>
 #include <sdk/os/mem.h>
 
-extern int ls_main(int argc, char **argv)
+extern int ls_main(int argc, char **argv) { (void)argc; (void)argv;
 {
     // clear buffer
     terminal->ClearBuffer();
@@ -22,7 +24,7 @@ extern int ls_main(int argc, char **argv)
     wchar_t fileName[100];
     char outBuf[110];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
     while (ret>=0){
         //create dirEntry structure
         struct dirEntry thisfile;
@@ -33,7 +35,7 @@ extern int ls_main(int argc, char **argv)
             thisfile.fileName[i] = ch;
         }
         //copy file type
-        thisfile.type=findInfoBuf.type==File_EntryTypeDirectory?'D':'F';
+        thisfile.type=findInfoBuf.type==EntryTypeDirectory?'D':'F';
         //display this
         strcpy(outBuf, thisfile.fileName);
         // check if it will fit on the screen or we are in second half
@@ -52,7 +54,7 @@ extern int ls_main(int argc, char **argv)
         directory[dirFiles++] = thisfile;
         
         //serch the next
-        ret = File_FindNext(findHandle, fileName, &findInfoBuf);
+        ret = File_FindNext(findHandle, (char_const16_t*)fileName, &findInfoBuf);
     }
     File_FindClose(findHandle);
 

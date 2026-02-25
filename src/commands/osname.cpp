@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file osname.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -6,7 +8,7 @@
  * @date 2022-07-05
  */
 
-extern int osname_main(int argc, char **argv)
+extern int osname_main(int argc, char **argv) { (void)argc; (void)argv;
 {
     char outBuf[BUF_SIZE];
 

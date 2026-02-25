@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file username.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -6,7 +8,7 @@
  * @date 2022-07-05
  */
 
-extern int username_main(int argc, char **argv)
+extern int username_main(int argc, char **argv) { (void)argc; (void)argv;
 {
     // check if second argument starts with '-'
     char outBuf[BUF_SIZE];

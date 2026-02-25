@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file date.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -8,7 +10,7 @@
 
 #include "../../lib/core/rtc.hpp"
 
-extern int date_main(int argc, char **argv)
+extern int date_main(int argc, char **argv) { (void)argc; (void)argv;
 {
     // check if second argument starts with '-'
     char outBuf[BUF_SIZE];

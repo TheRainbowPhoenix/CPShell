@@ -1,3 +1,5 @@
+#include <cstring>
+#include <cstdlib>
 /**
  * @file test.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -6,7 +8,7 @@
  * @date 2022-06-06
  */
 
-extern int test_main(int argc, char **argv)
+extern int test_main(int argc, char **argv) { (void)argc; (void)argv;
 {
     // print all arguments
     for (int i = 0; i < argc; i++) {
