@@ -61,8 +61,8 @@ void checkTouchEvents() {
          // check if there are any touch handlers
          if (touchHandlersLength > 0) {
             for (uint8_t i = 0; i < touchHandlersLength; i++) {
-               if (event.data.touch_single.p1_x >= touchHandlers[i].minX && event.data.touch_single.p1_x <= touchHandlers[i].maxX &&
-                  event.data.touch_single.p1_y >= touchHandlers[i].minY && event.data.touch_single.p1_y <= touchHandlers[i].maxY) {
+               if ((uint32_t)event.data.touch_single.p1_x >= touchHandlers[i].minX && (uint32_t)event.data.touch_single.p1_x <= touchHandlers[i].maxX &&
+                  (uint32_t)event.data.touch_single.p1_y >= touchHandlers[i].minY && (uint32_t)event.data.touch_single.p1_y <= touchHandlers[i].maxY) {
                   // check direction
                   if (event.data.touch_single.direction == touchHandlers[i].direction) {
                      (*touchHandlers[i].callback)();

@@ -33,7 +33,7 @@ char *getUsername()
 
 // String comparison
 int comparePartial(const char *str1, const char *str2, int start) {
-    for (int i = start; i < start + strlen(str2); i++) {
+    for (int i = start; i < start + (int)strlen(str2); i++) {
         if (str1[i] != str2[i - start]) {
             return 0;
         }
@@ -42,7 +42,7 @@ int comparePartial(const char *str1, const char *str2, int start) {
 }
 
 // "Safe" file operations
-int safe_internal(int ret, char *msg) {
+int safe_internal(int ret, const char *msg) {
     if (ret < 0) {
         terminal->WriteChars(msg);
         File_Close(ret);

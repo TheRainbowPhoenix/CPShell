@@ -1,3 +1,4 @@
+#include <stdlib.h>
 // draw_functions.hpp by InterChan
 // minor changes by s3ansh33p for new file structure
 
