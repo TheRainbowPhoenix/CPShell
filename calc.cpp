@@ -207,8 +207,8 @@ void vline(int x, int y1, int y2, uint16_t color){
 }
 #endif
 
+#ifdef PC
 void fillScreen(uint16_t color){
-	#ifdef PC
 		unsigned char pixels[4]; // { A, B, G, R }
 		//Convert 565 colors to RGBA
 		/*R*/ pixels[3] = (color >> 8) & 0b11111000;
@@ -227,12 +227,8 @@ void fillScreen(uint16_t color){
 		SDL_Rect rect;
 		rect.x = 0; rect.y = 0; rect.w =width; rect.h = height;
 		SDL_UpdateTexture(texture, &rect , (void*)screen, 4*width); //The last number defines the number of bytes per row. ( width * bytePerPixel )
-	#else
-		const uint32_t size = width * height;
-		for(uint32_t i = 0; i<size;i++)
-			vram[i] = color;
-	#endif
 }
+#endif
 
 //This is defined in sdk/calc/calc.cpp for the calc...
 #ifdef PC
