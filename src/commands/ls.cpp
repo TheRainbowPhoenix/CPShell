@@ -7,7 +7,8 @@
  */
 
 #include "../internal.hpp"
-#include <sdk/os/file.hpp>
+#include <sdk/os/file.h>
+#include <sdk/os/mem.h>
 
 extern int ls_main(int argc, char **argv)
 {
@@ -20,19 +21,19 @@ extern int ls_main(int argc, char **argv)
     int findHandle;
     wchar_t fileName[100];
     char outBuf[110];
-    struct findInfo findInfoBuf;
-    int ret = findFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
+    struct File_FindInfo findInfoBuf;
+    int ret = File_FindFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
     while (ret>=0){
         //create dirEntry structure
         struct dirEntry thisfile;
-        memset(&thisfile, 0, sizeof(thisfile));
+        Mem_Memset(&thisfile, 0, sizeof(thisfile));
         //copy file name
         for (int i=0; fileName[i]!=0; i++){
             wchar_t ch = fileName[i];
             thisfile.fileName[i] = ch;
         }
         //copy file type
-        thisfile.type=findInfoBuf.type==findInfoBuf.EntryTypeDirectory?'D':'F';
+        thisfile.type=findInfoBuf.type==File_EntryTypeDirectory?'D':'F';
         //display this
         strcpy(outBuf, thisfile.fileName);
         // check if it will fit on the screen or we are in second half
@@ -51,9 +52,9 @@ extern int ls_main(int argc, char **argv)
         directory[dirFiles++] = thisfile;
         
         //serch the next
-        ret = findNext(findHandle, fileName, &findInfoBuf);
+        ret = File_FindNext(findHandle, fileName, &findInfoBuf);
     }
-    findClose(findHandle);
+    File_FindClose(findHandle);
 
     terminal->WriteBuffer('\n', false);
     return 0; // return 0 on success

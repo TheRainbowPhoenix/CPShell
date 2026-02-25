@@ -7,7 +7,7 @@
  */
 
 #include "../internal.hpp"
-#include <sdk/os/file.hpp>
+#include <sdk/os/file.h>
 
 extern int cat_main(int argc, char **argv)
 {
@@ -36,34 +36,34 @@ extern int cat_main(int argc, char **argv)
     // check if the path exists
     int findHandle;
     wchar_t fileName[100];
-    struct findInfo findInfoBuf;
-    int ret = findFirst(wpath, &findHandle, fileName, &findInfoBuf);
+    struct File_FindInfo findInfoBuf;
+    int ret = File_FindFirst(wpath, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // path does not exist
         strcpy(outBuf, "Path does not exist.\n");
         terminal->WriteChars(outBuf);
         
         // close the file
-        findClose(findHandle);
+        File_FindClose(findHandle);
         return 0;
     }
 
     // path exists, check if it is a directory
-    if (findInfoBuf.type == findInfoBuf.EntryTypeDirectory) {
+    if (findInfoBuf.type == File_EntryTypeDirectory) {
         // path is a directory
         strcpy(outBuf, "Path is a directory.\n");
         terminal->WriteChars(outBuf);
         
         // close the file
-        findClose(findHandle);
+        File_FindClose(findHandle);
         return 0;
     }
 
     // close the file
-    findClose(findHandle);
+    File_FindClose(findHandle);
 
     // now that we know the path is a file, open it
-    int fd = open(path, OPEN_READ);
+    int fd = File_Open(path, FILE_OPEN_READ);
     if (fd < 0) {
         // An error occurred calling open
         strcpy(outBuf, "An error occurred calling open.\n");
@@ -73,10 +73,10 @@ extern int cat_main(int argc, char **argv)
 
     // copy memory address
 	uint8_t* addr;
-	getAddr(fd,0,(const void**)&addr);
+	File_GetAddr(fd,0,(const void**)&addr);
 
     // close the file
-    ret = close(fd);
+    ret = File_Close(fd);
     if (ret < 0) {
         // An error occurred calling close
         strcpy(outBuf, "An error occurred calling close.\n");

@@ -1,4 +1,4 @@
-#include <appdef.hpp>
+#include <appdef.h>
 
 // main
 #include "calc.hpp"

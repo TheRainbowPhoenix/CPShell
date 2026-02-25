@@ -149,13 +149,13 @@ void cpshell_init() {
     strcpy(applets[12].name, "username");
     applets[12].main = username_main;
 
-    memset(&applets[13], 0, sizeof(Applet));
+    Mem_Memset(&applets[13], 0, sizeof(Applet));
 
     // init file system
     // Reference: SnailMath/filemgr
 
     //initialize g_path to home ("\\fls0\\")
-	memset(g_path,0,sizeof(g_path));
+	Mem_Memset(g_path,0,sizeof(g_path));
 	strcpy (g_path, g_home);
 
     //convert from char to wchar

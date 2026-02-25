@@ -25,9 +25,9 @@ free(menuFont);
 #define PATH_PREFIX "\\fls0\\usr\\textures\\CPShell\\"
 // #define FONT_PREFIX "\\fls0\\usr\\fonts\\CPShell" // I don't use this, but you can if you want to 
 
-#include <sdk/os/file.hpp>
-#include <sdk/os/mem.hpp>
-#include <sdk/os/string.hpp>
+#include <sdk/os/file.h>
+#include <sdk/os/mem.h>
+#include <sdk/os/string.h>
 #include "shaders.hpp"
 #include "../calc.hpp"
 
@@ -54,18 +54,18 @@ uint16_t *load_texture(const char *texturepath) {
 		strcpy(concatpath, "\\fls0\\usr\\textures\\"); // try not to do this, it's a bad idea
 	#endif
 	strcat(concatpath, texturepath);
-	int fd = open(concatpath, OPEN_READ);
+	int fd = File_Open(concatpath, FILE_OPEN_READ);
 	if (fd > -1) {
 		uint16_t info[2];
-		read(fd, info, 4);
+		File_Read(fd, info, 4);
 		uint16_t w = info[0];
 		uint16_t h = info[1];
 		uint16_t *result = (uint16_t*)malloc(w*h*2+4);
 		memUsed += (w*h*2)+4;
 		txLoaded += 1;
-		lseek(fd, 0, SEEK_SET);
-		read(fd, result, w*h*2+4);
-		close(fd);
+		File_Lseek(fd, 0, FILE_SEEK_SET);
+		File_Read(fd, result, w*h*2+4);
+		File_Close(fd);
 		return result;
 	}
 	return 0;
@@ -91,18 +91,18 @@ uint8_t *load_font(const char *fontpath) {
 		strcpy(concatpath, "\\fls0\\usr\\fonts\\");
 	#endif
 	strcat(concatpath, fontpath);
-	int fd = open(concatpath, OPEN_READ);
+	int fd = File_Open(concatpath, FILE_OPEN_READ);
 	if (fd > -1) {
 		uint16_t info[4];
-		read(fd, info, 4);
+		File_Read(fd, info, 4);
 		uint16_t w = info[0];
 		uint16_t h = info[1];
 		uint8_t *result = (uint8_t*)malloc(95*w*h/8+5);
 		memUsed += (95*w*h/8)+5;
 		fLoaded += 1;
-		lseek(fd, 0, SEEK_SET);
-		read(fd, result, (95*w*h/8)+5);
-		close(fd);
+		File_Lseek(fd, 0, FILE_SEEK_SET);
+		File_Read(fd, result, (95*w*h/8)+5);
+		File_Close(fd);
 		return result;
 	}
 	return 0;

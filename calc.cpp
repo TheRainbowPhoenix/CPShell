@@ -15,11 +15,11 @@ extern void main2(); //in file main.cpp
 #endif
 
 
-extern "C"
 #ifdef PC
+extern "C"
 int  main(){
 #else
-void main(){
+int main(){
 #endif
 	//Initialisation
 	#ifdef PC
@@ -32,9 +32,7 @@ void main(){
 		SDL_RenderClear(renderer);
 		texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,320,528);
 	#else
-		vram = LCD_GetVRAMAddress();
 		LCD_GetSize(&width, &height);
-		LCD_VRAMBackup(); //Stores the VRAM content
 	#endif
 
 	//The actual program
@@ -45,8 +43,11 @@ void main(){
 		SDL_DestroyWindow(win);
 		SDL_Quit();
 	#else
-		LCD_VRAMRestore(); //Restores the VRAM content
 		LCD_Refresh();
+	#endif
+
+	#ifndef PC
+	return 0;
 	#endif
 }
 

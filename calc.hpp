@@ -11,10 +11,10 @@
 	extern int width;
 	extern int height;
 #else
-	#include <sdk/os/debug.hpp> //This contains stdint (uint32_t and so on)
-	#include <sdk/os/lcd.hpp>
-	#include <sdk/calc/calc.hpp> //a few functions from CPappTemplate got moved here...
-	#include <appdef.hpp>
+	#include <sdk/os/debug.h> //This contains stdint (uint32_t and so on)
+	#include <sdk/os/lcd.h>
+	#include <sdk/calc/calc.h> //a few functions from CPappTemplate got moved here...
+	#include <appdef.h>
 	//extern "C" void getKey(uint32_t *key1, uint32_t *key2);
 	//extern uint16_t *vram;
 	extern uint8_t debugprintline;
@@ -61,7 +61,8 @@ inline void setPixel(int x,int y, uint32_t color){
 		rect.x = x; rect.y = y; rect.w =1; rect.h = 1;
 		SDL_UpdateTexture(texture, &rect , (void*)pixels, 4); //The last number defines the number of bytes per row. ( width * bytePerPixel )	
 	#else
-		*((uint16_t*)( (uint32_t)vram + ((width*y + x)*2)  )) = color;
+		uint16_t *vram = LCD_GetVRAMAddress();
+		vram[width*y + x] = color;
 	#endif
 	}
 }

@@ -8,7 +8,8 @@
 
 #pragma once
 #include "../../calc.hpp"
-#include <sdk/os/input.hpp>
+#include <sdk/os/input.h>
+#include <sdk/os/mem.h>
 
 struct TouchHandler {
    uint32_t minX;
@@ -32,7 +33,7 @@ uint8_t touchHandlersLength = 0;
 struct ActBarHandler actBarHandlers[6];
 uint8_t actBarHandlersLength = 0;
 
-struct InputEvent event;
+struct Input_Event event;
 
 void checkTouchEvents() {
    
@@ -48,7 +49,7 @@ void checkTouchEvents() {
    // if at 00 00 04 B0 then just got input (10 mins internally)
    if (powerOffTime == 0x004B0000) return;
 
-   memset(&event, 0, sizeof(event));
+   Mem_Memset(&event, 0, sizeof(event));
    GetInput(&event, 0xFFFFFFFF, 0x10); // polls
 
    switch (event.type) {

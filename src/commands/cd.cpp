@@ -7,7 +7,7 @@
  */
 
 #include "../internal.hpp"
-#include <sdk/os/file.hpp>
+#include <sdk/os/file.h>
 
 extern int cd_main(int argc, char **argv)
 {
@@ -26,31 +26,31 @@ extern int cd_main(int argc, char **argv)
     // check if the path exists
     int findHandle;
     wchar_t fileName[100];
-    struct findInfo findInfoBuf;
-    int ret = findFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
+    struct File_FindInfo findInfoBuf;
+    int ret = File_FindFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // path does not exist
         strcpy(outBuf, "Path does not exist.\n");
         terminal->WriteChars(outBuf);
         
         // close the file
-        findClose(findHandle);
+        File_FindClose(findHandle);
         return 0;
     }
 
     // path exists, check if it is a directory
-    if (findInfoBuf.type != findInfoBuf.EntryTypeDirectory) {
+    if (findInfoBuf.type != File_EntryTypeDirectory) {
         // path is not a directory
         strcpy(outBuf, "Path is not a directory.\n");
         terminal->WriteChars(outBuf);
         
         // close the file
-        findClose(findHandle);
+        File_FindClose(findHandle);
         return 0;
     }
 
     // close the file
-    findClose(findHandle);
+    File_FindClose(findHandle);
 
     // check for .. - will need to change this in the future to support ../../.. etc
     if (strcmp(argv[1], "..") == 0) {
