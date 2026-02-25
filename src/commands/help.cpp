@@ -24,7 +24,7 @@ extern int help_main(int, char **)
     while (a->name[0] != 0) {
         strcpy(cmds, (a++)->name);
         // check if terminal->bufferCX is at the end of the line + 2 for ', '
-        if ((terminal->bufferCX + (int16_t)(strlen(a->name) + 2) >= terminal->xmax) {
+        if ((terminal->bufferCX + (int16_t)(strlen(a->name) + 2)) >= terminal->xmax) {
             terminal->WriteBuffer('\n', false);
             terminal->ClearBuffer();
         }
