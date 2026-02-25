@@ -56,12 +56,12 @@ int safe_read(int fd, char *buf, int len) {
     return safe_internal(ret, "An error occurred calling read.\n");
 }
 
-int safe_write(int fd, char *buf, int len) {
+int safe_write(int fd, const char *buf, int len) {
     int ret = File_Write(fd, buf, len);
     return safe_internal(ret, "An error occurred calling write.\n");
 }
 
-int safe_open(char *path, int flags) {
+int safe_open(const char *path, int flags) {
     int ret = File_Open(path, flags);
     return safe_internal(ret, "An error occurred calling open.\n");
 }
@@ -72,7 +72,7 @@ int safe_close(int fd) {
 }
 
 int safe_lseek(int fd, int offset, int whence) {
-    int ret = File_Lseek(fd, offset, whence);
+    int ret = File_Lseek(fd, offset, (File_Whence)whence);
     return safe_internal(ret, "An error occurred calling lseek.\n");
 }
 
@@ -83,7 +83,7 @@ int add_history(int argc, char **argv) {
 
     // check if history file exists
     int findHandle;
-    wchar_t fileName[100];
+    char_const16_t fileName[100];
     struct File_FindInfo findInfoBuf;
     int ret = File_FindFirst((const char_const16_t*)g_whistory, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
@@ -102,7 +102,7 @@ int add_history(int argc, char **argv) {
         safe_close(fd);
 
     // history file exists, check if it is a directory
-    } else if (findInfoBuf.type == EntryTypeDirectory) {
+    } else if (findInfoBuf.type == File_FindInfo::EntryTypeDirectory) {
         // history file is a directory
         strcpy(outBuf, "History file is a directory.\n");
         terminal->WriteChars(outBuf);

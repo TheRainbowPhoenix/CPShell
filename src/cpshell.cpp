@@ -163,7 +163,7 @@ void cpshell_init() {
 
     //convert from char to wchar
     for(int i=0; g_path[i]!=0; i++){
-        wchar_t ch = g_path[i];
+        char_const16_t ch = g_path[i];
         g_wpath[i] = ch;
     }
     

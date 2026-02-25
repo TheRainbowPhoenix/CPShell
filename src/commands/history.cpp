@@ -18,9 +18,9 @@ extern int history_main(int, char **) {
 
     // check if history file exists
     int findHandle;
-    wchar_t fileName[100];
+    char_const16_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst((const char_const16_t*)g_whistory, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst(g_whistory, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // history file does not exist
         // create the file
@@ -40,7 +40,7 @@ extern int history_main(int, char **) {
         return 0;
 
     // history file exists, check if it is a directory
-    } else if (findInfoBuf.type == EntryTypeDirectory) {
+    } else if (findInfoBuf.type == File_FindInfo::EntryTypeDirectory) {
         // history file is a directory
         strcpy(outBuf, "History file is a directory.\n");
         terminal->WriteChars(outBuf);

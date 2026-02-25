@@ -21,7 +21,7 @@ extern int ls_main(int, char **)
     int dirFiles = 0;
 
     int findHandle;
-    wchar_t fileName[100];
+    char_const16_t fileName[100];
     char outBuf[110];
     struct File_FindInfo findInfoBuf;
     int ret = File_FindFirst((const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
@@ -31,11 +31,11 @@ extern int ls_main(int, char **)
         Mem_Memset(&thisfile, 0, sizeof(thisfile));
         //copy file name
         for (int i=0; fileName[i]!=0; i++){
-            wchar_t ch = fileName[i];
+            char_const16_t ch = fileName[i];
             thisfile.fileName[i] = ch;
         }
         //copy file type
-        thisfile.type=findInfoBuf.type==EntryTypeDirectory?'D':'F';
+        thisfile.type=findInfoBuf.type==File_FindInfo::EntryTypeDirectory?'D':'F';
         //display this
         strcpy(outBuf, thisfile.fileName);
         // check if it will fit on the screen or we are in second half

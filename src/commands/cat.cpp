@@ -30,16 +30,16 @@ extern int cat_main(int argc, char **argv)
     if (argv[1][0] != '\\') strcpy(path, g_path);
     strcat(path, argv[1]);
     // convert to wchar_t
-    wchar_t wpath[PATH_LEN];
+    char_const16_t wpath[PATH_LEN];
     for (int i = 0; i < PATH_LEN; i++) {
         wpath[i] = path[i];
     }
 
     // check if the path exists
     int findHandle;
-    wchar_t fileName[100];
+    char_const16_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst((const char_const16_t*)wpath, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst(wpath, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // path does not exist
         strcpy(outBuf, "Path does not exist.\n");
@@ -51,7 +51,7 @@ extern int cat_main(int argc, char **argv)
     }
 
     // path exists, check if it is a directory
-    if (findInfoBuf.type == EntryTypeDirectory) {
+    if (findInfoBuf.type == File_FindInfo::EntryTypeDirectory) {
         // path is a directory
         strcpy(outBuf, "Path is a directory.\n");
         terminal->WriteChars(outBuf);
