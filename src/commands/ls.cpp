@@ -21,10 +21,10 @@ extern int ls_main(int, char **)
     int dirFiles = 0;
 
     int findHandle;
-    char_const16_t fileName[100];
+    char_const16_t fileName[100] __attribute__((aligned(4)));
     char outBuf[110];
-    struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst((const char_const16_t*)(const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
+    struct File_FindInfo findInfoBuf __attribute__((aligned(4)));
+    int ret = File_FindFirst((const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
     while (ret>=0){
         //create dirEntry structure
         struct dirEntry thisfile;

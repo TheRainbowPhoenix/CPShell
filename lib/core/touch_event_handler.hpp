@@ -28,12 +28,12 @@ struct ActBarHandler {
 // can be changed to accomodate more events if needed
 
 struct TouchHandler touchHandlers[64];
-uint32_t touchHandlersLength = 0;
+uint8_t touchHandlersLength = 0;
 
 struct ActBarHandler actBarHandlers[6];
-uint32_t actBarHandlersLength = 0;
+uint8_t actBarHandlersLength = 0;
 
-struct Input_Event event __attribute__((aligned(4)));
+struct Input_Event event;
 
 void checkTouchEvents() {
    
