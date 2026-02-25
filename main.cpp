@@ -223,7 +223,7 @@ void main2() {
 	// load the textures and fonts
 	LOAD_FONT_PTR("7x8", f_7x8);
 	
-	app_fillScreen(0); // clear the screen to black (0,0,0)
+	fillScreen(0); // clear the screen to black (0,0,0)
 
 	RandomGenerator rngp;
 	rng = &rngp;

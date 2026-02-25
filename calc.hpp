@@ -37,11 +37,11 @@ void delay(uint32_t time);
 #ifdef PC
 void line(int x1, int y1, int x2, int y2, uint16_t color);
 void triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint16_t colorFill, uint16_t colorLine);
-void app_fillScreen(uint16_t color);
+void fillScreen(uint16_t color);
 #endif
 
 #ifdef PC
-	inline void LCD_ClearScreen(){ app_fillScreen((uint16_t)0xFFFF);}
+	inline void LCD_ClearScreen(){ fillScreen((uint16_t)0xFFFF);}
 #endif
 
 #ifdef PC
