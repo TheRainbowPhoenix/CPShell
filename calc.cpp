@@ -207,7 +207,7 @@ void vline(int x, int y1, int y2, uint16_t color){
 }
 #endif
 
-void fillScreen(uint16_t color){
+void app_fillScreen(uint16_t color){
 	#ifdef PC
 		unsigned char pixels[4]; // { A, B, G, R }
 		//Convert 565 colors to RGBA
@@ -358,7 +358,7 @@ void vline(int x, int y1, int y2, uint16_t color){
 		setPixel(x,y,color);
 }
 
-void fillScreen(uint16_t color){
+void app_fillScreen(uint16_t color){
 	//#ifdef PC
 		unsigned char pixels[4]; // { A, B, G, R }
 		//Convert 565 colors to RGBA

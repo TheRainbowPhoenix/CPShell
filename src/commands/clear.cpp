@@ -11,7 +11,7 @@
 extern int clear_main(int, char **)
 {
     // clear the screen to black
-    fillScreen(0);
+    app_fillScreen(0);
     // rerender the keyboard
     keyboard->Render();
     // keyboard highlight
