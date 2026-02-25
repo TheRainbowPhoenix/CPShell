@@ -20,10 +20,10 @@
 	extern uint8_t debugprintline;
 #endif
 
-extern int app_width;
-extern int app_height;
-#define width app_width
-#define height app_height
+#ifdef PC
+extern int width;
+extern int height;
+#endif
 
 void println(const char str[]                        );
 void println(const char str[],int a                  );
@@ -51,7 +51,7 @@ inline uint16_t color(uint8_t R, uint8_t G, uint8_t B){
 			((B>>3) & 0b0000000000011111));
 }
 inline void setPixel(int x,int y, uint32_t color){
-	if(x>=0 && x < app_width && y>=0 && y < app_height){
+	if(x>=0 && x < (int)width && y>=0 && y < (int)height){
 	#ifdef PC
 		unsigned char pixels[4]; // { A, B, G, R }
 		//Convert 565 colors to RGBA
@@ -63,8 +63,7 @@ inline void setPixel(int x,int y, uint32_t color){
 		rect.x = x; rect.y = y; rect.w =1; rect.h = 1;
 		SDL_UpdateTexture(texture, &rect , (void*)pixels, 4); //The last number defines the number of bytes per row. ( width * bytePerPixel )	
 	#else
-		uint16_t *vram = LCD_GetVRAMAddress();
-		vram[app_width*y + x] = color;
+		vram[width*y + x] = color;
 	#endif
 	}
 }

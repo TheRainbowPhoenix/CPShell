@@ -7,8 +7,8 @@ extern void main2(); //in file main.cpp
 	SDL_Window *win;
 	SDL_Renderer *renderer;
 	SDL_Texture *texture;
-	int app_width;
-	int app_height;
+	int width;
+	int height;
 #else
 	//uint16_t *vram; //this got moved to sdk/calc/calc.hpp
 	uint8_t debugprintline = 0;
@@ -23,19 +23,14 @@ int main(){
 #endif
 	//Initialisation
 	#ifdef PC
-		app_width  = 320;
-		app_height = 528;
+		width  = 320;
+		height = 528;
 		SDL_Init(SDL_INIT_EVERYTHING);
-		win = SDL_CreateWindow("CP3D", 100,100,app_width,app_height,SDL_WINDOW_SHOWN);
+		win = SDL_CreateWindow("CP3D", 100,100,width,height,SDL_WINDOW_SHOWN);
 		renderer = SDL_CreateRenderer(win, -1, 0);
 		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 		SDL_RenderClear(renderer);
 		texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,320,528);
-	#else
-		unsigned int w, h;
-		LCD_GetSize(&w, &h);
-		app_width = (int)w;
-		app_height = (int)h;
 	#endif
 
 	//The actual program
@@ -213,7 +208,7 @@ void vline(int x, int y1, int y2, uint16_t color){
 #endif
 
 void fillScreen(uint16_t color){
-	//#ifdef PC
+	#ifdef PC
 		unsigned char pixels[4]; // { A, B, G, R }
 		//Convert 565 colors to RGBA
 		/*R*/ pixels[3] = (color >> 8) & 0b11111000;
@@ -222,21 +217,21 @@ void fillScreen(uint16_t color){
 		/*A*/ pixels[0] = 0;
 
 		//create an array with the whole screen filled with this color
-		unsigned char screen[4*app_width*app_height] ;
-		for(long i=0;i<(app_width*app_height);i++){
+		unsigned char screen[4*width*height] ;
+		for(long i=0;i<(width*height);i++){
 			screen[4*i + 0] = pixels[0];
 			screen[4*i + 1] = pixels[1];
 			screen[4*i + 2] = pixels[2];
 			screen[4*i + 3] = pixels[3];
 		}
 		SDL_Rect rect;
-		rect.x = 0; rect.y = 0; rect.w =app_width; rect.h = app_height;
-		SDL_UpdateTexture(texture, &rect , (void*)screen, 4*app_width); //The last number defines the number of bytes per row. ( width * bytePerPixel )
-	//#else
-	//	const uint32_t size = app_width * app_height;
-	//	for(uint32_t i = 0; i<size;i++)
-	//		*((uint16_t*)( (uint32_t)vram + ( i*2 )  )) = color;
-	//#endif
+		rect.x = 0; rect.y = 0; rect.w =width; rect.h = height;
+		SDL_UpdateTexture(texture, &rect , (void*)screen, 4*width); //The last number defines the number of bytes per row. ( width * bytePerPixel )
+	#else
+		const uint32_t size = width * height;
+		for(uint32_t i = 0; i<size;i++)
+			vram[i] = color;
+	#endif
 }
 
 //This is defined in sdk/calc/calc.cpp for the calc...
