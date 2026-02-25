@@ -29,7 +29,7 @@ extern int cd_main(int argc, char **argv)
     int findHandle;
     char_const16_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // path does not exist
         strcpy(outBuf, "Path does not exist.\n");
@@ -60,7 +60,7 @@ extern int cd_main(int argc, char **argv)
         char parentDir[PATH_LEN];
         // search for the last '\\'
         int lastSlash = -1;
-        for (int i = 0; i < strlen(g_path) - 1; i++) { // len -1 as will always be a slash
+        for (int i = 0; i < (int)strlen(g_path) - 1; i++) { // len -1 as will always be a slash
             if (g_path[i] == '\\') {
                 lastSlash = i;
             }

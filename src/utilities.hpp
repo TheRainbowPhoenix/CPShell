@@ -85,7 +85,7 @@ int add_history(int argc, char **argv) {
     int findHandle;
     char_const16_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst((const char_const16_t*)g_whistory, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)(const char_const16_t*)g_whistory, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // history file does not exist
         // create the file

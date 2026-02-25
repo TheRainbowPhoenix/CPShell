@@ -39,7 +39,7 @@ extern int cat_main(int argc, char **argv)
     int findHandle;
     char_const16_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(wpath, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)wpath, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // path does not exist
         strcpy(outBuf, "Path does not exist.\n");

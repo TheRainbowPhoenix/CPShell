@@ -35,13 +35,13 @@ struct dirEntry{
 struct dirEntry directory[64];
 
 char g_path[PATH_LEN];
-char_const16_t g_wpath[PATH_LEN];
+char16_t g_wpath[PATH_LEN];
 char g_home[PATH_LEN] = "\\fls0\\"; // default home for now
 
-char_const16_t g_whistory[32] = u"\\fls0\\usr\\.history";
+char16_t g_whistory[32] = u"\\fls0\\usr\\.history";
 char g_history[32] = "\\fls0\\usr\\.history";
 
-char_const16_t g_wuserprofile[32] = u"\\fls0\\usr\\.profile";
+char16_t g_wuserprofile[32] = u"\\fls0\\usr\\.profile";
 char g_userprofile[32] = "\\fls0\\usr\\.profile";
 
 struct Applet {

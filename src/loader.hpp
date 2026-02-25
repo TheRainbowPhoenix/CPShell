@@ -30,7 +30,7 @@ int load_userprofile() {
     int findHandle;
     char_const16_t fileName[100];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst(g_wuserprofile, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)g_wuserprofile, &findHandle, fileName, &findInfoBuf);
     if (ret < 0) {
         // Does not exist so skip
         strcpy(outBuf, "LOAD: Skipping user profile load.\n");

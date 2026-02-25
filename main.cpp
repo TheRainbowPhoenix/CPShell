@@ -127,7 +127,7 @@ void kbEnter() {
 				callingArgs[terminal->bufferInPos] = '\0';
 				int argc = 0;
 				// count number spaces in callingArgs
-				for (int i = 0; i < strlen(callingArgs); i++) {
+				for (int i = 0; i < (int)strlen(callingArgs); i++) {
 					if (callingArgs[i] == ' ') {
 						argc++;
 					}
@@ -143,7 +143,7 @@ void kbEnter() {
 				
 				char currentArg[ARGV_SIZE];
 				int currentArgIndex = 0;
-				for (int i = 0; i < strlen(callingArgs); i++) {
+				for (int i = 0; i < (int)strlen(callingArgs); i++) {
 					if (callingArgs[i] == ' ') {
 						argv[argvIndex] = new char[currentArgIndex + 1];
 						for (int j = 0; j < currentArgIndex; j++) {

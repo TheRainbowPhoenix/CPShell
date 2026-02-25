@@ -24,7 +24,7 @@ extern int ls_main(int, char **)
     char_const16_t fileName[100];
     char outBuf[110];
     struct File_FindInfo findInfoBuf;
-    int ret = File_FindFirst((const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
+    int ret = File_FindFirst((const char_const16_t*)(const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
     while (ret>=0){
         //create dirEntry structure
         struct dirEntry thisfile;
@@ -39,7 +39,7 @@ extern int ls_main(int, char **)
         //display this
         strcpy(outBuf, thisfile.fileName);
         // check if it will fit on the screen or we are in second half
-        if ((terminal->bufferCX + strlen(outBuf)) >= terminal->xmax || (terminal->bufferCX + 1) >= (terminal->xmax/2)) {
+        if ((terminal->bufferCX + (int16_t)strlen(outBuf)) >= terminal->xmax || (terminal->bufferCX + 1) >= (terminal->xmax/2)) {
             terminal->WriteBuffer('\n', false);
             terminal->ClearBuffer();
         } else if (terminal->bufferCX > 0) {
@@ -54,7 +54,7 @@ extern int ls_main(int, char **)
         directory[dirFiles++] = thisfile;
         
         //serch the next
-        ret = File_FindNext(findHandle, (char_const16_t*)fileName, &findInfoBuf);
+        ret = File_FindNext(findHandle, (char_const16_t*)(char_const16_t*)fileName, &findInfoBuf);
     }
     File_FindClose(findHandle);
 
