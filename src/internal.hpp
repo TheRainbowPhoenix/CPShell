@@ -26,20 +26,22 @@
 
 // Files
 
+#include <sdk/os/file.h>
+
 struct dirEntry{
 	char fileName[100];
 	char type;
 };
 struct dirEntry directory[64];
 
-char g_path[PATH_LEN];
-wchar_t g_wpath[PATH_LEN];
+char g_path[PATH_LEN] __attribute__((aligned(4)));
+char16_t g_wpath[PATH_LEN] __attribute__((aligned(4)));
 char g_home[PATH_LEN] = "\\fls0\\"; // default home for now
 
-wchar_t g_whistory[32] = L"\\fls0\\usr\\.history";
+char16_t g_whistory[32] __attribute__((aligned(4))) = u"\\fls0\\usr\\.history";
 char g_history[32] = "\\fls0\\usr\\.history";
 
-wchar_t g_wuserprofile[32] = L"\\fls0\\usr\\.profile";
+char16_t g_wuserprofile[32] __attribute__((aligned(4))) = u"\\fls0\\usr\\.profile";
 char g_userprofile[32] = "\\fls0\\usr\\.profile";
 
 struct Applet {

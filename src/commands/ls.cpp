@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file ls.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -7,9 +9,10 @@
  */
 
 #include "../internal.hpp"
-#include <sdk/os/file.hpp>
+#include <sdk/os/file.h>
+#include <sdk/os/mem.h>
 
-extern int ls_main(int argc, char **argv)
+extern int ls_main(int, char **)
 {
     // clear buffer
     terminal->ClearBuffer();
@@ -18,25 +21,25 @@ extern int ls_main(int argc, char **argv)
     int dirFiles = 0;
 
     int findHandle;
-    wchar_t fileName[100];
+    char_const16_t fileName[100] __attribute__((aligned(4)));
     char outBuf[110];
-    struct findInfo findInfoBuf;
-    int ret = findFirst(g_wpath, &findHandle, fileName, &findInfoBuf);
+    struct File_FindInfo findInfoBuf __attribute__((aligned(4)));
+    int ret = File_FindFirst((const char_const16_t*)g_wpath, &findHandle, fileName, &findInfoBuf);
     while (ret>=0){
         //create dirEntry structure
         struct dirEntry thisfile;
-        memset(&thisfile, 0, sizeof(thisfile));
+        Mem_Memset(&thisfile, 0, sizeof(thisfile));
         //copy file name
         for (int i=0; fileName[i]!=0; i++){
-            wchar_t ch = fileName[i];
+            char_const16_t ch = fileName[i];
             thisfile.fileName[i] = ch;
         }
         //copy file type
-        thisfile.type=findInfoBuf.type==findInfoBuf.EntryTypeDirectory?'D':'F';
+        thisfile.type=findInfoBuf.type==File_FindInfo::EntryTypeDirectory?'D':'F';
         //display this
         strcpy(outBuf, thisfile.fileName);
         // check if it will fit on the screen or we are in second half
-        if ((terminal->bufferCX + strlen(outBuf)) >= terminal->xmax || (terminal->bufferCX + 1) >= (terminal->xmax/2)) {
+        if ((terminal->bufferCX + (int16_t)strlen(outBuf)) >= terminal->xmax || (terminal->bufferCX + 1) >= (terminal->xmax/2)) {
             terminal->WriteBuffer('\n', false);
             terminal->ClearBuffer();
         } else if (terminal->bufferCX > 0) {
@@ -51,9 +54,9 @@ extern int ls_main(int argc, char **argv)
         directory[dirFiles++] = thisfile;
         
         //serch the next
-        ret = findNext(findHandle, fileName, &findInfoBuf);
+        ret = File_FindNext(findHandle, (char_const16_t*)(char_const16_t*)fileName, &findInfoBuf);
     }
-    findClose(findHandle);
+    File_FindClose(findHandle);
 
     terminal->WriteBuffer('\n', false);
     return 0; // return 0 on success

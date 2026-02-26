@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 /**
  * @file clear.cpp
  * @author Sean McGinty (newfolderlocation@gmail.com)
@@ -6,7 +8,7 @@
  * @date 2022-06-06
  */
 
-extern int clear_main(int argc, char **argv)
+extern int clear_main(int, char **)
 {
     // clear the screen to black
     fillScreen(0);

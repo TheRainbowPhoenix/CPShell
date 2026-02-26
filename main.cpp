@@ -1,4 +1,5 @@
-#include <appdef.hpp>
+#include <string.h>
+#include <appdef.h>
 
 // main
 #include "calc.hpp"
@@ -126,7 +127,7 @@ void kbEnter() {
 				callingArgs[terminal->bufferInPos] = '\0';
 				int argc = 0;
 				// count number spaces in callingArgs
-				for (int i = 0; i < strlen(callingArgs); i++) {
+				for (int i = 0; i < (int)strlen(callingArgs); i++) {
 					if (callingArgs[i] == ' ') {
 						argc++;
 					}
@@ -142,7 +143,7 @@ void kbEnter() {
 				
 				char currentArg[ARGV_SIZE];
 				int currentArgIndex = 0;
-				for (int i = 0; i < strlen(callingArgs); i++) {
+				for (int i = 0; i < (int)strlen(callingArgs); i++) {
 					if (callingArgs[i] == ' ') {
 						argv[argvIndex] = new char[currentArgIndex + 1];
 						for (int j = 0; j < currentArgIndex; j++) {
@@ -222,6 +223,12 @@ void main2() {
 	// load the textures and fonts
 	LOAD_FONT_PTR("7x8", f_7x8);
 	
+	if (!f_7x8) {
+		Debug_Printf(0, 0, false, 0, "Error loading font!");
+		LCD_Refresh();
+		while(1);
+	}
+
 	fillScreen(0); // clear the screen to black (0,0,0)
 
 	RandomGenerator rngp;

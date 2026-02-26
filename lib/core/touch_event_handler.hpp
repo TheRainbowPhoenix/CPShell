@@ -8,7 +8,8 @@
 
 #pragma once
 #include "../../calc.hpp"
-#include <sdk/os/input.hpp>
+#include <sdk/os/input.h>
+#include <sdk/os/mem.h>
 
 struct TouchHandler {
    uint32_t minX;
@@ -27,12 +28,12 @@ struct ActBarHandler {
 // can be changed to accomodate more events if needed
 
 struct TouchHandler touchHandlers[64];
-uint8_t touchHandlersLength = 0;
+uint32_t touchHandlersLength = 0;
 
 struct ActBarHandler actBarHandlers[6];
-uint8_t actBarHandlersLength = 0;
+uint32_t actBarHandlersLength = 0;
 
-struct InputEvent event;
+struct Input_Event event __attribute__((aligned(4)));
 
 void checkTouchEvents() {
    
@@ -48,7 +49,7 @@ void checkTouchEvents() {
    // if at 00 00 04 B0 then just got input (10 mins internally)
    if (powerOffTime == 0x004B0000) return;
 
-   memset(&event, 0, sizeof(event));
+   Mem_Memset(&event, 0, sizeof(event));
    GetInput(&event, 0xFFFFFFFF, 0x10); // polls
 
    switch (event.type) {
@@ -60,8 +61,8 @@ void checkTouchEvents() {
          // check if there are any touch handlers
          if (touchHandlersLength > 0) {
             for (uint8_t i = 0; i < touchHandlersLength; i++) {
-               if (event.data.touch_single.p1_x >= touchHandlers[i].minX && event.data.touch_single.p1_x <= touchHandlers[i].maxX &&
-                  event.data.touch_single.p1_y >= touchHandlers[i].minY && event.data.touch_single.p1_y <= touchHandlers[i].maxY) {
+               if ((uint32_t)event.data.touch_single.p1_x >= touchHandlers[i].minX && (uint32_t)event.data.touch_single.p1_x <= touchHandlers[i].maxX &&
+                  (uint32_t)event.data.touch_single.p1_y >= touchHandlers[i].minY && (uint32_t)event.data.touch_single.p1_y <= touchHandlers[i].maxY) {
                   // check direction
                   if (event.data.touch_single.direction == touchHandlers[i].direction) {
                      (*touchHandlers[i].callback)();
