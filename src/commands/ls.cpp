@@ -47,7 +47,7 @@ extern int ls_main(int, char **)
         directory[dirFiles++] = thisfile;
         
         //serch the next
-        ret = File_FindNext(findHandle, (char_const16_t*)(char_const16_t*)fileName, &findInfoBuf);
+        ret = File_FindNext(findHandle, fileName, &findInfoBuf);
     }
     File_FindClose(findHandle);
 

@@ -126,29 +126,6 @@ void addActBarListener(uint16_t type, void (*callback)()) {
    actBarHandlers[actBarHandlersLength++] = handler;
 }
 
-void addListener(Input_Keycode key, void (*callback)()) {
-    KeyListener handler;
-    handler.key = key;
-    handler.callback = callback;
-    keyListeners[keyListenersLength++] = handler;
-}
-
-// Support for Keys1 legacy?
-// No, migrating to SDK keycodes.
-// But legacy event_handler.hpp defines addListener(Keys1).
-// To avoid conflict, I should rename my addListener or update main.cpp to call addKeyListener?
-// The error in main.cpp was: `cannot convert 'Input_Keycode' to 'Keys1'`.
-// And it referenced `lib/core/event_handler.hpp`.
-// `main.cpp` includes `lib/core/event_handler.hpp`.
-// It does NOT include `touch_event_handler.hpp` directly? No, it does.
-// But `addListener` is ambiguous or `event_handler.hpp`'s version is picked.
-// `event_handler.hpp` has `void addListener(Keys1 key...`.
-// `touch_event_handler.hpp` has `void addTouchListener...`.
-// I should add `addKeyListener` to `touch_event_handler.hpp` and USE IT in `main.cpp` instead of `addListener`.
-// And I should likely NOT include `event_handler.hpp` in `main.cpp` if I want to fully migrate.
-// But `main.cpp` calls `checkEvents`.
-// I'll define `addKeyListener` here.
-
 void addKeyListener(Input_Keycode key, void (*callback)()) {
     KeyListener handler;
     handler.key = key;
@@ -165,7 +142,7 @@ void removeTouchListener(uint32_t minX, uint32_t minY, uint32_t maxX, uint32_t m
    }
 }
 
-void removeActBarListener(uint16_t type) {
+void removeActBarListener(uint32_t type) {
    for (uint32_t i = 0; i < actBarHandlersLength; i++) {
       if (actBarHandlers[i].type == type) {
          actBarHandlers[i] = actBarHandlers[actBarHandlersLength - 1];

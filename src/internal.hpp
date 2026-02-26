@@ -1,5 +1,9 @@
-/*
- * Ported from BusyBox main internal header file on 0_32 branch
+/**
+ * @file internal.hpp
+ * @author Sean McGinty (newfolderlocation@gmail.com)
+ * @brief Ported from BusyBox main internal header file on 0_32 branch
+ * @version 1.1
+ * @date 2022-06-09
  */
 
 #ifndef	_INTERNAL_H_
