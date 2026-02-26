@@ -14,11 +14,8 @@ extern int clear_main(int, char **)
     fillScreen(0);
     // rerender the keyboard
     keyboard->Render();
-    // keyboard highlight
-    keyboard->Highlight(keyboard->xcursor, keyboard->ycursor);
     // clear the terminal buffer
     terminal->ClearBuffer();
-    // reset terminal y
-    terminal->bufferCY = 0;
+    terminal->Render();
     return 0;
 };

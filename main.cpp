@@ -5,8 +5,8 @@
 #include "calc.hpp"
 #include "lib/draw_functions.hpp"
 #include "lib/core/exceptions.hpp"
-#include "lib/core/event_handler.hpp"
-#include "lib/core/touch_event_handler.hpp"
+// #include "lib/core/event_handler.hpp" // Removed legacy event handler
+#include "lib/core/touch_event_handler.hpp" // New unified handler
 #include "lib/functions/random.hpp"
 
 // shell
@@ -44,16 +44,8 @@ void ProcessCommand() {
 	if (terminal->bufferInPos != 0) {
 		terminal->HideCursor();
 
-		// Move to next line history is handled in WriteBuffer('\n') ?
-		// No, WriteBuffer handles \n.
-		// If we press Enter, we should just WriteBuffer('\n')?
-		// But we need to execute the command.
-
 		// Copy command
 		char callingArgs[BUF_SIZE];
-		// bufferIn is not null terminated by default?
-		// WriteBuffer adds to bufferIn.
-		// Let's assume bufferIn has content up to bufferInPos.
 		for (int i = 0; i < terminal->bufferInPos; i++) {
 			callingArgs[i] = terminal->bufferIn[i];
 		}
@@ -214,33 +206,19 @@ void main2() {
 	terminal->Render();
 	keyboard->Render();
 
-	// Add event listeners
-	addListener(KEY_CLEAR, endShell); // end the shell - cmd now
-	addListener(KEY_BACKSPACE, kbBackspace); // remove last character
-	// addListener(KEY_SHIFT, kbShift); // toggle Shift - handled by virtual keyboard button now? Or keep physical key too?
-	// keyboard->shift is public, can toggle it.
+	// Add event listeners (Migrated to SDK keycodes and addKeyListener)
+	addKeyListener(KEYCODE_POWER_CLEAR, endShell);
+	addKeyListener(KEYCODE_BACKSPACE, kbBackspace);
 
-	addListener(KEYCODE_KEYBOARD, kbToggle);
+	addKeyListener(KEYCODE_KEYBOARD, kbToggle);
 
 	// Keyboard Listeners
-	// addListener(KEY_LEFT, kbLeft);
-	// addListener(KEY_RIGHT, kbRight);
-	addListener2(KEY_UP, kbUp);
-	addListener2(KEY_DOWN, kbDown);
-	addListener(KEY_EXE, kbEnter);
+	addKeyListener(KEYCODE_UP, kbUp);
+	addKeyListener(KEYCODE_DOWN, kbDown);
+	addKeyListener(KEYCODE_EXE, kbEnter);
 
-	// addTouchListener(0, 0, 300, 100, testTouch); // touch listener
-	// Touch listener covers whole screen for keyboard check?
-	// VirtualKeyboard::Update checks bounds.
-	// But `checkTouchEvents` checks bounds before calling callback.
-	// We should add a listener for the keyboard area.
-	// But keyboard area size changes or is fixed KBD_H?
-	// It's KBD_H at bottom.
 	addTouchListener(0, height - KBD_H, width, height, HandleTouchForKeyboard, TOUCH_DOWN);
 	addTouchListener(0, height - KBD_H, width, height, HandleTouchForKeyboard, TOUCH_UP);
-	// Also need TOUCH_HOLD_DRAG? cinput.py uses it.
-	// addTouchListener(0, height - KBD_H, width, height, HandleTouchForKeyboard, TOUCH_HOLD_DRAG);
-
 
 	// Initialize the shell
 	cpshell_init();
@@ -269,9 +247,8 @@ void main2() {
 			}
 		}
 
-		checkEvents();
-		checkTouchEvents();
-		// Debug_Printf(10,28,true,0,"T X: %i | Y: %i | PX: %i | PY: %i",terminal->bufferCX, terminal->bufferCY, terminal->bufferCX * terminal->xmargin + terminal->bufferOffsetX, terminal->bufferCY * terminal->ymargin + terminal->bufferOffsetY);
+		// checkEvents(); // Removed legacy event loop
+		checkTouchEvents(); // Unified event loop
 
 		LCD_Refresh();
 	}

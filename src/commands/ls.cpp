@@ -38,18 +38,11 @@ extern int ls_main(int, char **)
         thisfile.type=findInfoBuf.type==File_FindInfo::EntryTypeDirectory?'D':'F';
         //display this
         strcpy(outBuf, thisfile.fileName);
-        // check if it will fit on the screen or we are in second half
-        if ((terminal->bufferCX + (int16_t)strlen(outBuf)) >= terminal->xmax || (terminal->bufferCX + 1) >= (terminal->xmax/2)) {
-            terminal->WriteBuffer('\n', false);
-            terminal->ClearBuffer();
-        } else if (terminal->bufferCX > 0) {
-            // change to second half
-            terminal->bufferCX = (terminal->xmax/2);
-        }
         // check if directory
         uint32_t newColor = thisfile.type=='D'?color(255,0,0):0xFFFF; // red for directories, white for files
         terminal->SetColor(newColor);
         terminal->WriteChars(outBuf, true);
+        terminal->WriteBuffer('\n', false);
         //save this dirEntry to directory
         directory[dirFiles++] = thisfile;
         

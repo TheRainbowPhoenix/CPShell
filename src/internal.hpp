@@ -19,6 +19,12 @@
 
 #define CPS_VERSION     "0.1.0"
 
+// UI Constants
+#define KBD_H 260
+#define TAB_H 30
+#define SCREEN_W width
+#define SCREEN_H height
+
 #define isBlank(ch)     (((ch) == ' ') || ((ch) == '\t'))
 #define isDecimal(ch)   (((ch) >= '0') && ((ch) <= '9'))
 #define isOctal(ch)     (((ch) >= '0') && ((ch) <= '7'))
